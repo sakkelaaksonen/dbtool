@@ -6,8 +6,9 @@
   <style type="text/css">
     body { background:black; }
     label {color:white;}
+    input { min-width:2vw; max-width: 4vw; text-align: right}
     .n-frame {  color:white; font-size: 20vw; text-align: center; }
-    .start-btn {margin-top: 2vw; font-size: 15vw; text-align: center; display:block; padding: 1vw 2vw; margin: 0 auto; border: ;}
+    .start-btn {margin-top: 3vw; font-size: 8vw; text-align: center; display:block; padding: 1vw 2vw; margin: 0 auto; border: ;}
   </style>
 
     <script src="https://cdn.jsdelivr.net/npm/kefir@3.8.3/dist/kefir.min.js"></script>
@@ -59,13 +60,11 @@
 <body>
   <div>
     <label for="time">AIKAVÄLI (sekunttia) </label>
-       <input type="number" class="number-input" id="time" value="3"/>
-  </div>
-   <div>
-  <label for="range">NUMEROSARJA (1 ... ?)</label>
-     <input type="number"  class="number-input" id="range" value="200"/>
+    <input type="number" class="number-input" id="time" value="3"/>
+    <label for="range">NUMEROSARJA (1 ... ?)</label>
+    <input type="number"  class="number-input" id="range" value="200"/>
    </div>
-<div id="js-number" class="n-frame">...</div>
-<button class="start-btn" id="js-start-btn">Restart</button>
+  <div id="js-number" class="n-frame">...</div>
+  <button class="start-btn" id="js-start-btn">Restart</button>
 </body>
 </html>
