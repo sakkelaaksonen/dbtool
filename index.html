@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    body { background:black; }
+    label {color:white;}
+    .n-frame {  color:white; font-size: 20vw; text-align: center; }
+    .start-btn {margin-top: 2vw; font-size: 15vw; text-align: center; display:block; padding: 1vw 2vw; margin: 0 auto; border: ;}
+  </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/kefir@3.8.3/dist/kefir.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.9.0/underscore.min.js"></script>
+
+    <script>
+
+      let mainStream = null;
+      let display = null;
+      let range = null;
+      let time = null;
+      function main() {
+        document
+          .getElementById('js-start-btn')
+          .addEventListener('click',restart,true);
+
+        display = document.getElementById('js-number');
+
+        start();
+      }
+
+
+      function restart() {
+        display.innerHTML = 'uudestaan';
+        mainStream.offValue(showValue);
+        start();
+      }
+      function start() {
+        time = Number(document.getElementById('time').value) * 1000;
+        range = Number(document.getElementById('range').value);
+
+        const numbers = _.shuffle(_.range(1,range));
+        mainStream = Kefir.sequentially(time,numbers);
+        mainStream.onValue(showValue).onEnd(showEnd);
+
+      }
+
+      function showValue( v)  {
+        display.innerHTML = v;
+      }
+
+      function showEnd() {
+        display.innerHTML = 'LOPPU';
+      }
+
+      document.addEventListener('DOMContentLoaded',()=> main())
+    </script>
+</head>
+<body>
+  <div>
+    <label for="time">AIKAVÄLI (sekunttia) </label>
+       <input type="number" class="number-input" id="time" value="3"/>
+  </div>
+   <div>
+  <label for="range">NUMEROSARJA (1 ... ?)</label>
+     <input type="number"  class="number-input" id="range" value="200"/>
+   </div>
+<div id="js-number" class="n-frame">...</div>
+<button class="start-btn" id="js-start-btn">Restart</button>
+</body>
+</html>
