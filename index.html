@@ -15,54 +15,53 @@
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.9.0/underscore.min.js"></script>
 
     <script>
+      (function(){
 
-      let mainStream = null;
-      let display = null;
-      let range = null;
-      let time = null;
-      function main() {
-        document
-          .getElementById('js-start-btn')
-          .addEventListener('click',restart,true);
+        let mainStream = null;
+        let display = null;
+        let range = null;
+        let time = null;
 
-        display = document.getElementById('js-number');
+        function main() {
+          document
+            .getElementById('js-start-btn')
+            .addEventListener('click',restart,true);
+          display = document.getElementById('js-number');
+          start();
+        }
 
-        start();
-      }
 
+        function restart() {
+          showValue('...uudestaan...');
+          mainStream.offValue(showValue);
+          start();
+        }
 
-      function restart() {
-        display.innerHTML = 'uudestaan';
-        mainStream.offValue(showValue);
-        start();
-      }
-      function start() {
-        time = Number(document.getElementById('time').value) * 1000;
-        range = Number(document.getElementById('range').value);
+        function start() {
+          time = Number(document.getElementById('time').value) * 1000;
+          range = Number(document.getElementById('range').value);
+          mainStream = Kefir.sequentially(time,_.shuffle(_.range(1,range)));
+          mainStream.onValue(showValue).onEnd(showEnd);
+        }
 
-        const numbers = _.shuffle(_.range(1,range));
-        mainStream = Kefir.sequentially(time,numbers);
-        mainStream.onValue(showValue).onEnd(showEnd);
+        function showValue(v)  {
+          display.innerHTML = v;
+        }
 
-      }
+        function showEnd() {
+          showValue('BINGO!');
+        }
 
-      function showValue( v)  {
-        display.innerHTML = v;
-      }
-
-      function showEnd() {
-        display.innerHTML = 'LOPPU';
-      }
-
-      document.addEventListener('DOMContentLoaded',()=> main())
+        document.addEventListener('DOMContentLoaded',()=> main())
+      })();
     </script>
 </head>
 <body>
   <div>
     <label for="time">AIKAVÄLI (sekunttia) </label>
-    <input type="number" class="number-input" id="time" value="3"/>
+    <input type="number" class="number-input" id="time" value="3" min="1" max="10"/>
     <label for="range">NUMEROSARJA (1 ... ?)</label>
-    <input type="number"  class="number-input" id="range" value="200"/>
+    <input type="number"  class="number-input" id="range" value="200" min="10" max="1000"/>
    </div>
   <div id="js-number" class="n-frame">...</div>
   <button class="start-btn" id="js-start-btn">Restart</button>
