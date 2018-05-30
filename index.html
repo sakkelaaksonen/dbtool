@@ -1,69 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <style type="text/css">
-    body { background:black; }
-    label {color:white;}
-    input { min-width:2vw; max-width: 4vw; text-align: right}
-    .n-frame {  color:white; font-size: 20vw; text-align: center; }
-    .start-btn {margin-top: 3vw; font-size: 8vw; text-align: center; display:block; padding: 1vw 2vw; margin: 0 auto; border: ;}
-  </style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dildobingon numerot</title>
+    <style type="text/css">
+    body { background:black; color:white; margin:0; font-family:monospace;}
+    input {
+      min-width:2vw;
+      max-width: 8rem;
+      text-align: center;
+      background: black;
+      color: white;
+      border:2px solid white;
+      border-radius: 3px;
+      padding: 0.2rem;
+    }
 
+    hr {
+      border: 2px solid white;
+    }
+
+    input:focus {
+      background:white;
+      color: black;
+      outline: 2px solid rgba(240,240,255,0.8);
+      border-radius: 8px;
+
+    }
+    .control-block {
+      margin: 0 0 2vw 0;
+    }
+
+    .n-frame { color:white; text-align: center; }
+    .start-btn {
+      margin-top: 3vw;
+      font-size: 8vw;
+      text-align: center;
+      display:block;
+      padding: 1vw 2vw;
+      margin: 0 auto;
+      border: 1px solid transparent;
+    }
+
+    .controls {
+      max-width:80vw;
+      margin: 2vw auto;
+    }
+
+
+    @media only screen and (orientation:portrait){
+      .app {
+        height: 100vw;
+        width: 100vw;
+      }
+      .n-frame {
+        font-size: 10rem;
+        margin-top: 25vw;
+      }
+      .controls {
+        max-width:80vw;
+        margin: 2vw auto;
+        text-align: center;
+      }
+
+    }
+    @media only screen and (orientation:landscape){
+      .app {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      .n-frame {
+        font-size: 12rem;
+      }
+      .start-btn {
+        font-size: 2rem;
+      }
+      .control-block {
+        float:left;
+        margin-right: 2rem;
+      }
+    }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/kefir@3.8.3/dist/kefir.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.9.0/underscore.min.js"></script>
-
     <script>
-      (function(){
+    (function(){
 
-        let mainStream = null;
-        let display = null;
-        let range = null;
-        let time = null;
+      let mainStream = null;
+      let display = null;
+      let range = null;
+      let time = null;
 
-        function main() {
-          document
-            .getElementById('js-start-btn')
-            .addEventListener('click',restart,true);
-          display = document.getElementById('js-number');
-          start();
-        }
+      function main() {
+        document
+        .getElementById('js-start-btn')
+        .addEventListener('click',restart,true);
+        display = document.getElementById('js-number');
+        start();
+      }
 
+      function restart() {
+        showValue('...uudestaan...');
+        mainStream.offValue(showValue);
+        start();
+      }
 
-        function restart() {
-          showValue('...uudestaan...');
-          mainStream.offValue(showValue);
-          start();
-        }
+      function start() {
+        time = Number(document.getElementById('time').value) * 1000;
+        range = Number(document.getElementById('range').value);
+        mainStream = Kefir.sequentially(time,_.shuffle(_.range(1,range)));
+        mainStream.onValue(showValue).onEnd(showEnd);
+      }
 
-        function start() {
-          time = Number(document.getElementById('time').value) * 1000;
-          range = Number(document.getElementById('range').value);
-          mainStream = Kefir.sequentially(time,_.shuffle(_.range(1,range)));
-          mainStream.onValue(showValue).onEnd(showEnd);
-        }
+      function showValue(v)  {
+        display.innerHTML = v;
+      }
 
-        function showValue(v)  {
-          display.innerHTML = v;
-        }
-
-        function showEnd() {
-          showValue('BINGO!');
-        }
-
-        document.addEventListener('DOMContentLoaded',()=> main())
-      })();
+      function showEnd() {
+        showValue('BINGO!');
+      }
+    document.addEventListener('DOMContentLoaded',()=> main())
+    })();
     </script>
-</head>
-<body>
-  <div>
-    <label for="time">AIKAVÄLI (sekunttia) </label>
-    <input type="number" class="number-input" id="time" value="3" min="1" max="10"/>
-    <label for="range">NUMEROSARJA (1 ... ?)</label>
-    <input type="number"  class="number-input" id="range" value="200" min="10" max="1000"/>
-   </div>
-  <div id="js-number" class="n-frame">...</div>
-  <button class="start-btn" id="js-start-btn">Restart</button>
-</body>
+  </head>
+  <body>
+    <div class="app">
+      <div id="js-number" class="n-frame">...</div>
+      <hr />
+      <div class="controls">
+        <div class="control-block">
+          <input type="number" class="number-input" id="time" value="3" min="1" max="10"/>
+          <label for="time">Sekunttia</label>
+        </div>
+
+        <div class="control-block">
+          <input type="number"  class="number-input" id="range" value="200" min="10" max="1000"/>
+          <label for="range">Numeroa</label>
+        </div>
+        <button class="start-btn" id="js-start-btn">Restart</button>
+      </div>
+    </div>
+  </body>
 </html>
