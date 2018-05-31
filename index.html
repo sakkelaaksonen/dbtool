@@ -19,6 +19,9 @@
     }
 
     .app-block {
+      width: 90vw;
+      max-width: 800px;
+
 
     }
     .control-block {
@@ -44,7 +47,7 @@
     }
 
     .control-block input {
-      padding: 10px 15px;
+      padding: 20px 0;
       text-align: center;
       display: block;
       width: 100%;
@@ -74,7 +77,6 @@
       color: black;
       position: absolute;
       left: 6px;
-      top: 14px;
       color: white;
     }
 
@@ -85,8 +87,6 @@
     .n-frame { color:white; text-align: center; line-height: 1;}
 
     .controls {
-      max-width:80vw;
-      margin: 2vw auto;
       display: flex;
     }
 
@@ -103,8 +103,10 @@
 */
       input +label {
         font-size: 8vw;
+        top: 2vh;
       }
       .control-block:last-of-type {
+        margin-top: 1rem;
         width: 100%;
       }
 
@@ -113,6 +115,7 @@
 
       input +label {
         font-size: 4vw;
+        top: 5vh;
       }
 
       .n-frame {
@@ -175,7 +178,7 @@
          </div>
 
          <div class="control-block">
-            <input type="number"  class="number-input" id="range" value="100" min="10" max="1000"/>
+            <input type="number"  class="number-input" id="range" value="100" min="10" max="100"/>
            <label for="range">🔢</label>
          </div>
          <div class="control-block">
