@@ -28,20 +28,12 @@
       position: relative;
     }
 
-    .control-block:first-of-type,.control-block:nth-of-type(2) {
-      width:  50%;
-    }
-
-    .control-block:last-of-type {
-      flex-shrink:2;
-    }
-
     .control-block input, .control-block button {
       background: black;
       color: white;
       border:2px solid white;
       border-radius: 3px;
-      font-size: 8vw;
+      font-size: 64px;
       display: block;
       /*min-width: 12vw;*/
     }
@@ -78,13 +70,30 @@
       position: absolute;
       left: 6px;
       color: white;
+      font-size:28px;
+
+    }
+
+    .time-input + label{
+        top: 6px;
+    }
+
+    .range-input + label {
+      top:8px;
     }
 
     input:focus + label{
       color:black;
     }
 
-    .n-frame { color:white; text-align: center; line-height: 1;}
+    .n-frame {
+      color:white;
+      text-align: center;
+      line-height: 1;
+      height: 50vh;
+      line-height: 40vh;
+
+    }
 
     .controls {
       display: flex;
@@ -93,7 +102,12 @@
     @media only screen and (orientation:portrait){
       .n-frame {
         font-size: 10rem;
+        margin-bottom: 2rem;
       }
+      .n-frame.bingo {
+        font-size:8rem;
+      }
+
 
       .controls {flex-wrap: wrap;}
 
@@ -101,10 +115,10 @@
         width: 50%;
       }
 */
-      input +label {
-        font-size: 8vw;
-        top: 2vh;
+      .control-block:first-of-type,.control-block:nth-of-type(2) {
+        width:  50%;
       }
+
       .control-block:last-of-type {
         margin-top: 1rem;
         width: 100%;
@@ -113,13 +127,15 @@
     }
     @media only screen and (orientation:landscape){
 
-      input +label {
-        font-size: 4vw;
-        top: 5vh;
-      }
-
       .n-frame {
         font-size: 12rem;
+      }
+
+      .n-frame.bingo {
+        font-size:10rem;
+      }
+      .control-block{
+        width:  33%;
       }
     }
     </style>
@@ -133,10 +149,6 @@
       let range = null;
       let time = null;
 
-      function getNumbersAndBingo() {
-
-      }
-
       function main() {
         document
         .getElementById('js-start-btn')
@@ -145,6 +157,7 @@
       }
 
       function restart() {
+        toggle();
         showValue('...');
         if(mainStream !== null)
           mainStream.offValue(showValue);
@@ -152,33 +165,38 @@
       }
 
       function start() {
-        time = Number(document.getElementById('time').value) * 1000;
-        range = Number(document.getElementById('range').value);
+        time = Number(document.getElementById('js-time').value) * 1000;
+        range = Number(document.getElementById('js-range').value);
         const numbers = _.shuffle(_.range(1,range+1)).concat(['bingo']);
         mainStream = Kefir.sequentially(time,numbers);
-        mainStream.onValue(showValue);
+        mainStream.onValue(showValue).onEnd(toggle);
+
       }
 
       function showValue(v)  {
         display.innerHTML = v;
       }
 
-     document.addEventListener('DOMContentLoaded',()=> main())
+      function toggle() {
+        display.classList.toggle('bingo');
+      }
+
+      document.addEventListener('DOMContentLoaded',()=> main())
     })();
     </script>
   </head>
   <body>
     <div class="app">
      <div class="app-block">
-        <div id="js-number" class="n-frame">...</div>
+        <div id="js-number" class="n-frame bingo">bingo</div>
        <div class="controls">
          <div class="control-block">
-           <input type="number" class="number-input" id="time" value="1" min="1" max="10"/>
+           <input type="number" class="number-input time-input" id="js-time" value="1" min="1" max="10"/>
            <label for="time">⌚</label>
          </div>
 
          <div class="control-block">
-            <input type="number"  class="number-input" id="range" value="100" min="10" max="100"/>
+            <input type="number"  class="number-input range-input" id="js-range" value="100" min="10" max="100"/>
            <label for="range">🔢</label>
          </div>
          <div class="control-block">
