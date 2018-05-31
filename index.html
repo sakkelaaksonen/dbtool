@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dildobingon numerot</title>
     <style type="text/css">
+
     body { background:black; color:white; margin:0; font-family:sans-serif;}
 
     div,input,button,label {
@@ -16,6 +17,7 @@
       width: 100vw;
       justify-content: center;
       align-items: center;
+      z-index: 1;
     }
 
     .app-block {
@@ -29,7 +31,7 @@
     }
 
     .control-block input, .control-block button {
-      background: black;
+      background: rgba(0,0,0,0.4);
       color: white;
       border:2px solid white;
       border-radius: 3px;
@@ -92,7 +94,8 @@
       line-height: 1;
       height: 50vh;
       line-height: 40vh;
-
+      text-shadow: 6px 6px 0px rgba(150,150,150,0.5);
+      background: rgba(0,0,0,0.4);
     }
 
     .controls {
@@ -138,6 +141,64 @@
         width:  33%;
       }
     }
+
+    .db-logo {
+      overflow: hidden;
+      opacity:0.2;
+      position:absolute;
+      top:0;
+      left:0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 0;
+      margin:0 auto;
+      display: flex;
+      justify-content: center;
+    }
+    .db-logo-container {
+      position: relative;
+      width: 200px;
+    }
+    .logo-part {
+      background: white;
+      position:absolute;
+    }
+    .left-ear,.right-ear  {
+      height: 80px ;
+      width: 80px;
+      border-radius: 80px;
+      top: 15px;
+    }
+    .left-ear {
+      left:10px;
+    }
+    .right-ear {
+      right:10px;
+    }
+
+    .trunk {
+      border-radius: 80px;
+      height: 350px;
+      width: 120px;
+      top: 75px;
+      left:41px;
+    }
+
+    .left-ball, .right-ball {
+      height: 160px;
+      width: 160px;
+      border-radius: 160px;
+      top: 340px;
+    }
+
+    .left-ball {
+      left:-40px;
+    }
+
+    .right-ball {
+      right:-40px;
+    }
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/kefir@3.8.3/dist/kefir.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.9.0/underscore.min.js"></script>
@@ -186,22 +247,30 @@
     </script>
   </head>
   <body>
+    <div class="db-logo">
+      <div class="db-logo-container">
+        <div class="left-ear logo-part"></div>
+        <div class="right-ear logo-part"></div>
+        <div class="trunk logo-part"></div>
+        <div class="left-ball logo-part"></div>
+        <div class="right-ball logo-part"></div>
+      </div>
+    </div>
     <div class="app">
      <div class="app-block">
         <div id="js-number" class="n-frame bingo">bingo</div>
-       <div class="controls">
-         <div class="control-block">
-           <input type="number" class="number-input time-input" id="js-time" value="1" min="1" max="10"/>
-           <label for="time">⌚</label>
-         </div>
-
-         <div class="control-block">
+        <div class="controls">
+          <div class="control-block">
+            <input type="number" class="number-input time-input" id="js-time" value="1" min="1" max="10"/>
+            <label for="time">⌚</label>
+          </div>
+          <div class="control-block">
             <input type="number"  class="number-input range-input" id="js-range" value="100" min="10" max="100"/>
-           <label for="range">🔢</label>
-         </div>
-         <div class="control-block">
-           <input type="button" id="js-start-btn" className="button" value="🔀" />
-         </div>
+            <label for="range">🔢</label>
+          </div>
+          <div class="control-block">
+            <input type="button" id="js-start-btn" className="button" value="🔀" />
+          </div>
        </div>
      </div>
     </div>
