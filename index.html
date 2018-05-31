@@ -30,14 +30,14 @@
       position: relative;
     }
 
-    .control-block input, .control-block button {
+    .control-block .button,.control-block .number-input {
       background: rgba(0,0,0,0.4);
       color: white;
       border:2px solid white;
-      border-radius: 3px;
+      border-radius: 6px;
       font-size: 64px;
       display: block;
-      /*min-width: 12vw;*/
+
     }
 
     .control-block input {
@@ -52,8 +52,6 @@
       text-align: center;
       display:block;
       width: 100%;
-
-
     }
 
     .control-block input:focus,
@@ -67,7 +65,7 @@
       outline: 0;
     }
 
-    input + label {
+    .number-input + .emoticon-label {
       color: black;
       position: absolute;
       left: 6px;
@@ -76,15 +74,15 @@
 
     }
 
-    .time-input + label{
+    .time-input + .emoticon-label{
         top: 6px;
     }
 
-    .range-input + label {
+    .range-input + .emoticon-label {
       top:8px;
     }
 
-    input:focus + label{
+     .number-input:focus + .emoticon-label{
       color:black;
     }
 
@@ -114,12 +112,17 @@
 
       .controls {flex-wrap: wrap;}
 
-/*      .control-block:first-of-type, .control-block:nth-of-type(1) {  {
-        width: 50%;
-      }
-*/
       .control-block:first-of-type,.control-block:nth-of-type(2) {
         width:  50%;
+      }
+
+      .control-block:first-of-type .number-input {
+        border-radius:6px 0 0 6px;
+        border-right: 2px solid transparent;
+      }
+      .control-block:nth-of-type(2) .number-input  {
+        border-radius: 0 6px 6px 0;
+
       }
 
       .control-block:last-of-type {
@@ -140,6 +143,21 @@
       .control-block{
         width:  33%;
       }
+
+      .control-block:first-of-type .number-input {
+        border-radius:6px 0 0 6px;
+        border-right: 2px solid transparent;
+      }
+      .control-block:nth-of-type(2) .number-input  {
+        border-radius: 0;
+        border-right: 2px solid transparent;
+
+      }
+
+      .control-block:last-of-type .button  {
+        border-radius: 0 6px 6px 0;
+      }
+
     }
 
     .db-logo {
@@ -262,14 +280,14 @@
         <div class="controls">
           <div class="control-block">
             <input type="number" class="number-input time-input" id="js-time" value="1" min="1" max="10"/>
-            <label for="time">⌚</label>
+            <label for="time" class="emoticon-label">⌚</label>
           </div>
           <div class="control-block">
-            <input type="number"  class="number-input range-input" id="js-range" value="100" min="10" max="100"/>
-            <label for="range">🔢</label>
+            <input type="number" class="number-input range-input" id="js-range" value="100" min="10" max="100"/>
+            <label for="range" class="emoticon-label">🔢</label>
           </div>
           <div class="control-block">
-            <input type="button" id="js-start-btn" className="button" value="🔀" />
+            <input type="button" id="js-start-btn" class="button" value="🔀" />
           </div>
        </div>
      </div>
