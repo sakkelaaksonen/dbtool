@@ -5,47 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dildobingon numerot</title>
     <style type="text/css">
-    body { background:black; color:white; margin:0; font-family:monospace;}
-    input {
-      min-width:2vw;
-      max-width: 8rem;
-      text-align: center;
+    body { background:black; color:white; margin:0; font-family:sans-serif;}
+
+    div , input,button,label {
+      box-sizing: border-box;
+    }
+    .app {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app-block {
+
+    }
+    .control-block {
+      margin: 0 2vw 2vw 0;
+      position: relative;
+    }
+
+    .control-block:first-of-type {
+      flex-shrink:2;
+    }
+
+    .control-block:last-of-type {
+      flex-shrink:2;
+    }
+
+    .control-block input, .control-block button {
       background: black;
       color: white;
       border:2px solid white;
       border-radius: 3px;
-      padding: 0.2rem;
+      font-size: 8vw;
+      display: block;
+      /*min-width: 12vw;*/
     }
 
-    hr {
-      border: 2px solid white;
+    .control-block input {
+      padding: 0.6rem;
+      text-align: right;
+
+    }
+    .control-block button {
+      text-align: center;
+      padding: 0.6rem;
+      display:block;
+
     }
 
-    input:focus {
+
+    .control-block label {
+      position: absolute;
+      left: 6px;
+      top: 14px;
+      font-size: 6vw;
+    }
+
+    .control-block input:focus,
+    .control-block button:active {
       background:white;
       color: black;
-      outline: 2px solid rgba(240,240,255,0.8);
-      border-radius: 8px;
-
-    }
-    .control-block {
-      margin: 0 0 2vw 0;
+      outline: 0;
     }
 
-    .n-frame { color:white; text-align: center; }
-    .start-btn {
-      margin-top: 3vw;
-      font-size: 8vw;
-      text-align: center;
+    .control-block button:focus {
+      outline: 0;
+    }
+
+    input + label {
+      color: black;
+      position: absolute;
+      display:none;
+    }
+
+    input:focus + label{
+      top: 14px;
+      color:black;
       display:block;
-      padding: 1vw 2vw;
-      margin: 0 auto;
-      border: 1px solid transparent;
+
     }
+
+    .n-frame { color:white; text-align: center; min-width: 50vw;}
 
     .controls {
       max-width:80vw;
       margin: 2vw auto;
+      display: flex;
     }
 
 
@@ -56,12 +103,13 @@
       }
       .n-frame {
         font-size: 10rem;
-        margin-top: 25vw;
+        /*margin-top: 25vw;*/
       }
       .controls {
         max-width:80vw;
         margin: 2vw auto;
         text-align: center;
+        display: flex;
       }
 
     }
@@ -75,13 +123,6 @@
       }
       .n-frame {
         font-size: 12rem;
-      }
-      .start-btn {
-        font-size: 2rem;
-      }
-      .control-block {
-        float:left;
-        margin-right: 2rem;
       }
     }
     </style>
@@ -104,7 +145,7 @@
       }
 
       function restart() {
-        showValue('...uudestaan...');
+        showValue('...');
         mainStream.offValue(showValue);
         start();
       }
@@ -129,20 +170,25 @@
   </head>
   <body>
     <div class="app">
-      <div id="js-number" class="n-frame">...</div>
-      <hr />
-      <div class="controls">
-        <div class="control-block">
-          <input type="number" class="number-input" id="time" value="3" min="1" max="10"/>
-          <label for="time">Sekunttia</label>
-        </div>
+     <div class="app-block">
+        <div id="js-number" class="n-frame">...</div>
+       <div class="controls">
+         <div class="control-block">
+           <label for="time">⌚</label>
+           <input type="number" class="number-input" id="time" value="1" min="1" max="10"/>
+           <label for="time">⌚</label>
+         </div>
 
-        <div class="control-block">
-          <input type="number"  class="number-input" id="range" value="200" min="10" max="1000"/>
-          <label for="range">Numeroa</label>
-        </div>
-        <button class="start-btn" id="js-start-btn">Restart</button>
-      </div>
+         <div class="control-block">
+           <label for="range">🔢</label>
+           <input type="number"  class="number-input" id="range" value="100" min="10" max="1000"/>
+           <label for="range">🔢</label>
+         </div>
+         <div class="control-block">
+           <button id="js-start-btn">🔀</button>
+         </div>
+       </div>
+     </div>
     </div>
   </body>
 </html>
