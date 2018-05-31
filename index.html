@@ -7,12 +7,13 @@
     <style type="text/css">
     body { background:black; color:white; margin:0; font-family:sans-serif;}
 
-    div , input,button,label {
-      box-sizing: border-box;
+    div,input,button,label {
+      box-sizing: content-box;
     }
     .app {
       display: flex;
       height: 100vh;
+      width: 100vw;
       justify-content: center;
       align-items: center;
     }
@@ -21,12 +22,11 @@
 
     }
     .control-block {
-      margin: 0 2vw 2vw 0;
       position: relative;
     }
 
-    .control-block:first-of-type {
-      flex-shrink:2;
+    .control-block:first-of-type,.control-block:nth-of-type(2) {
+      width:  50%;
     }
 
     .control-block:last-of-type {
@@ -44,25 +44,29 @@
     }
 
     .control-block input {
-      padding: 0.6rem;
-      text-align: right;
+      padding: 10px 15px;
+      text-align: center;
+      display: block;
+      width: 100%;
+
 
     }
-    .control-block button {
+    .control-block .button {
       text-align: center;
-      padding: 0.6rem;
       display:block;
+      width: 100%;
+
 
     }
 
     .control-block input:focus,
-    .control-block button:active {
+    .control-block .button:active {
       background:white;
       color: black;
       outline: 0;
     }
 
-    .control-block button:focus {
+    .control-block .button:focus {
       outline: 0;
     }
 
@@ -71,7 +75,6 @@
       position: absolute;
       left: 6px;
       top: 14px;
-      font-size: 6vw;
       color: white;
     }
 
@@ -79,7 +82,7 @@
       color:black;
     }
 
-    .n-frame { color:white; text-align: center; min-width: 50vw;}
+    .n-frame { color:white; text-align: center; line-height: 1;}
 
     .controls {
       max-width:80vw;
@@ -87,32 +90,31 @@
       display: flex;
     }
 
-
     @media only screen and (orientation:portrait){
-      .app {
-        height: 100vw;
-        width: 100vw;
-      }
       .n-frame {
         font-size: 10rem;
-        /*margin-top: 25vw;*/
       }
-      .controls {
-        max-width:80vw;
-        margin: 2vw auto;
-        text-align: center;
-        display: flex;
+
+      .controls {flex-wrap: wrap;}
+
+/*      .control-block:first-of-type, .control-block:nth-of-type(1) {  {
+        width: 50%;
+      }
+*/
+      input +label {
+        font-size: 8vw;
+      }
+      .control-block:last-of-type {
+        width: 100%;
       }
 
     }
     @media only screen and (orientation:landscape){
-      .app {
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
+
+      input +label {
+        font-size: 4vw;
       }
+
       .n-frame {
         font-size: 12rem;
       }
@@ -177,7 +179,7 @@
            <label for="range">🔢</label>
          </div>
          <div class="control-block">
-           <button id="js-start-btn">🔀</button>
+           <input type="button" id="js-start-btn" className="button" value="🔀" />
          </div>
        </div>
      </div>
