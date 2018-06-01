@@ -242,8 +242,10 @@
       function restart() {
         toggle();
         showValue('...');
-        if(mainStream !== null)
-          mainStream.offValue(showValue);
+        if(mainStream !== null){
+          mainStream.offValue(showValue).offEnd(endRoutine);
+        }
+
         start();
       }
 
@@ -254,7 +256,6 @@
         mainStream = Kefir.sequentially(time,numbers);
         mainStream.onValue(showValue).onEnd(endRoutine);
         btn.classList.add('run')
-
       }
 
       function showValue(v)  {
