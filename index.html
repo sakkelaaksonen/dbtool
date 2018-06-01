@@ -37,10 +37,6 @@
       border-radius: 6px;
       font-size: 64px;
       display: block;
-
-    }
-
-    .control-block input {
       padding: 20px 0;
       text-align: center;
       display: block;
@@ -54,7 +50,7 @@
       width: 100%;
     }
 
-    .control-block input:focus,
+    .control-block .number-input:focus,
     .control-block .button:active {
       background:white;
       color: black;
@@ -63,6 +59,12 @@
 
     .control-block .button:focus {
       outline: 0;
+    }
+
+    .control-block .button.run,
+    .control-block .button.run:active,
+    .control-block .button.run:focus {
+      background: #e22;
     }
 
     .number-input + .emoticon-label {
@@ -227,12 +229,14 @@
       let display = null;
       let range = null;
       let time = null;
+      let btn = null
 
       function main() {
         document
         .getElementById('js-start-btn')
         .addEventListener('click',restart,true);
         display = document.getElementById('js-number');
+        btn = document.getElementById('js-start-btn');
       }
 
       function restart() {
@@ -248,7 +252,8 @@
         range = Number(document.getElementById('js-range').value);
         const numbers = _.shuffle(_.range(1,range+1)).concat(['bingo']);
         mainStream = Kefir.sequentially(time,numbers);
-        mainStream.onValue(showValue).onEnd(toggle);
+        mainStream.onValue(showValue).onEnd(endRoutine);
+        btn.classList.add('run')
 
       }
 
@@ -256,11 +261,17 @@
         display.innerHTML = v;
       }
 
+      function endRoutine() {
+        toggle();
+        btn.classList.remove('run')
+      }
+
       function toggle() {
         display.classList.toggle('bingo');
       }
 
-      document.addEventListener('DOMContentLoaded',()=> main())
+      document.addEventListener('DOMContentLoaded',()=> main());
+
     })();
     </script>
   </head>
